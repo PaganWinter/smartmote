@@ -1,4 +1,8 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors',1);
+ini_set('display_startup_errors',1);
+error_reporting(-1);
 
 require_once("bootstrap.php");
 
@@ -54,18 +58,14 @@ function print_categories($db) {
 <title>Smartmote</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 
-<!-- <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.5.min.css"> -->
-<!-- <link rel="stylesheet" type="text/css" href="css/jquery.mobile.checkradio.structure.min.css"> -->
 <link rel="stylesheet" type="text/css" href="css/jquery.materialripple.css">
-<link rel="stylesheet" type="text/css" href="css/main.css?v=1.43">
+<link rel="stylesheet" type="text/css" href="css/main.css?v=1.47">
 
 <!-- fonts -->
 <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed' rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Roboto+Slab' rel='stylesheet' type='text/css'>
 
-<!-- <script type="text/javascript" src="js/jquery.mobile.checkradio.min.js"></script> -->
-<!-- <script type="text/javascript" src="js/jquery.mobile-1.4.5.min.js"></script> -->
 <script type="text/javascript" src="js/jquery.js?v=1.2"></script>
 <script type="text/javascript" src="js/jquery.materialripple.js"></script>
 
@@ -146,12 +146,12 @@ function print_categories($db) {
 		var selected_cats = new Array();
 
 		media_query="screen and (max-width: 500px)";
+
 		if (window.matchMedia(media_query).matches) {
 		}
 		else {
 			$container.css({width: "500px"});
 		}
-
 
 		/* Caching jQuery elements */
 		$container = $("#container");
@@ -200,7 +200,6 @@ function print_categories($db) {
 			"width": ($container.width()-90)
 		});
 		$(".chl-name").css({
-			//"width": ($(window).width() - 115)
 			"width": ($container.width()-115)
 		});
 		$(".panel").css({
@@ -213,6 +212,7 @@ function print_categories($db) {
 		$("#tab-bar").width($container.width());
 		$("#panel-controls").width($container.width());
 		$(".tab").width(($(window).width()-4)/5);
+		$("#search-box").width($(window).width() - 70);
 
 
 
@@ -412,6 +412,18 @@ function print_categories($db) {
 
 </head>
 <body>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-60335508-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
 <div id="container">
 <!-- <div id="result"></div> -->
 <div id="recents-bar">
@@ -475,7 +487,6 @@ function print_categories($db) {
   </tr>
 </table>
 
-
 <div id="panel-filter" class="panel" style="">
 	<ul>
 <?php
@@ -484,11 +495,9 @@ function print_categories($db) {
 	</ul>
 </div>
 
-
 <div id="panel-search" class="panel" style="">
-	<input type="text" name="search-text" id="search-box" size="20"/><a id="clear-search" href="#"></a>
+	<input type="text" name="search-text" id="search-box" size="20" placeholder="Search" /><a id="clear-search" href="#"></a>
 </div>
-
 
 <ul id="tab-bar">
 	<li id="tab-controls" class="tab"><a href="#">Remote</a></li>
