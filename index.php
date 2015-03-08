@@ -22,7 +22,6 @@ function print_channels($db) {
     if (!file_exists('images/logos/'.$chl_logo)) {
       $logo_img = '<img src="images/logos/clear.gif" width="90px" height="50px" />';
     }
-
     print '<li id="chl-'.htmlspecialchars($chl_no).'" class="chl cat-'.htmlspecialchars($chl_cat_id).' clearfix" data-num="'.htmlspecialchars($chl_no).'" data-id="'.htmlspecialchars($chl_id).'" data-name="'.htmlspecialchars($chl_name).'">
 		<div class="chl-logo"><div class="chl-no">'.htmlspecialchars($chl_no).'</div>'.$logo_img.'</div>
 		<div class="chl-details clearfix">
@@ -58,6 +57,8 @@ function print_categories($db) {
 <title>Smartmote</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 
+<!-- <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.5.min.css"> -->
+<!-- <link rel="stylesheet" type="text/css" href="css/jquery.mobile.checkradio.structure.min.css"> -->
 <link rel="stylesheet" type="text/css" href="css/jquery.materialripple.css">
 <link rel="stylesheet" type="text/css" href="css/main.css?v=1.47">
 
@@ -66,6 +67,8 @@ function print_categories($db) {
 <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Roboto+Slab' rel='stylesheet' type='text/css'>
 
+<!-- <script type="text/javascript" src="js/jquery.mobile.checkradio.min.js"></script> -->
+<!-- <script type="text/javascript" src="js/jquery.mobile-1.4.5.min.js"></script> -->
 <script type="text/javascript" src="js/jquery.js?v=1.2"></script>
 <script type="text/javascript" src="js/jquery.materialripple.js"></script>
 
@@ -145,13 +148,6 @@ function print_categories($db) {
 	$( document ).ready(function() {
 		var selected_cats = new Array();
 
-		media_query="screen and (max-width: 500px)";
-
-		if (window.matchMedia(media_query).matches) {
-		}
-		else {
-			$container.css({width: "500px"});
-		}
 
 		/* Caching jQuery elements */
 		$container = $("#container");
@@ -170,6 +166,15 @@ function print_categories($db) {
 		$search_box = $("#search-box");
 		$recents_bar = $("#recents-bar");
 		$channels_list = $("#channels");
+
+		media_query="screen and (max-width: 500px)";
+		if (window.matchMedia(media_query).matches) {
+			// console.log("mobile");
+		}
+		else {
+			// console.log("desktop");
+			$container.css({width: "500px"});
+		}
 
 
 		/*** Syncing state ***/
@@ -211,12 +216,15 @@ function print_categories($db) {
 		$recents_bar.width($container.width ());
 		$("#tab-bar").width($container.width());
 		$("#panel-controls").width($container.width());
-		$(".tab").width(($(window).width()-4)/5);
-		$("#search-box").width($(window).width() - 70);
+		$("#panel-filter").width($container.width());
+		$("#panel-search").width($container.width());
+		$(".tab").width(($container.width()-4)/5);
+		$("#search-box").width($container.width() - 70);
 
 
 
 		/*** Load EPG ***/
+//		$(".chl-programs.not-loaded").on("click", function() {
 		$(".chl-details").on("click", function() {
 			var id = $(this).parent().data("id");
 			$result.text(id);
@@ -374,7 +382,7 @@ function print_categories($db) {
 		});
 
 
-		// Clicking Buttons
+		/* Clicking Buttons */
 		$( ".btn" ).on( "click", function() {
 			key = $(this).data("key");
 			$result.text(key);
@@ -407,6 +415,7 @@ function print_categories($db) {
 		$('.btn').materialripple();
 		$('.tab').materialripple();
 		$('#panel-filter li').materialripple();
+
 	});
 </script>
 
@@ -487,6 +496,11 @@ function print_categories($db) {
   </tr>
 </table>
 
+<!--
+<div style="position: fixed; margin-top: -1px; left: 12%; width: 0; height: 0; padding: 0; border-left: 7px solid transparent; border-right: 7px solid transparent; border-top: 7px solid #fff; float: right;"></div>
+-->
+
+
 <div id="panel-filter" class="panel" style="">
 	<ul>
 <?php
@@ -495,9 +509,11 @@ function print_categories($db) {
 	</ul>
 </div>
 
+
 <div id="panel-search" class="panel" style="">
 	<input type="text" name="search-text" id="search-box" size="20" placeholder="Search" /><a id="clear-search" href="#"></a>
 </div>
+
 
 <ul id="tab-bar">
 	<li id="tab-controls" class="tab"><a href="#">Remote</a></li>

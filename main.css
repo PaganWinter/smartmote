@@ -298,7 +298,8 @@ ul#channels li.fav .chl-name {
   border-bottom: none;
   _z-index: 999;
   z-index: 0;
-  overflow: scroll;
+  overflow-y: scroll;
+  overflow-x: hidden;
   _margin-top: 45px;
 }
 #panel-filter ul {
