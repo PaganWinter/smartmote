@@ -60,7 +60,7 @@ function print_categories($db) {
 <!-- <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.5.min.css"> -->
 <!-- <link rel="stylesheet" type="text/css" href="css/jquery.mobile.checkradio.structure.min.css"> -->
 <link rel="stylesheet" type="text/css" href="css/jquery.materialripple.css">
-<link rel="stylesheet" type="text/css" href="css/main.css?v=1.47">
+<link rel="stylesheet" type="text/css" href="css/main.css?v=1.48">
 
 <!-- fonts -->
 <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed' rel='stylesheet' type='text/css'>
@@ -239,7 +239,10 @@ function print_categories($db) {
 				success: function(epg_json){
 					$prog_div.removeClass('loading');
 					var epg = JSON.parse(epg_json);
-					if (epg.status = 1 && epg.data.prog.length > 0) {
+					if (typeof epg.data.prog === 'undefined') {
+						$prog_div.html("Program list unavailable for this channel");
+					}
+					else if (epg.status = 1 && epg.data.prog.length > 0) {
 						$prog_div.removeClass('not-loaded');
 						$prog_div.addClass('loaded');
 						$prog_div.html('<ul class="chl-programs-container" style="width: '+(epg.data.prog.length * 205)+'px"></ul>');
