@@ -102,9 +102,6 @@ function print_categories($db) {
 
 
 <ul id="channels">
-<?php
-  print_channels($db);
-?>
 </ul>
 
 
@@ -450,35 +447,31 @@ var channels = [
 
 var listContainer = document.getElementById('channels')
 channels.forEach(function(chl) {
+  let chlId = chl[0]
   let chlName = chl[1]
+  let chlNo = chl[2]
+  let chlCat = chl[4]
   let chlLogo = chlName.toLowerCase().replace(/ /g, '-')+'.gif'
   let logoImg = '<img src="images/logos/'+chlLogo+'" width="90px" />'
 
-  console.log(logoImg)
-
-/*
-  //$chl_logo = str_replace(" ", "-", strtolower($chl_name)) . ".gif";
-
-    //$logo_img = '<img src="images/logos/'.htmlspecialchars($chl_logo).'" width="90px" />';
-
-    if (!file_exists('images/logos/'.$chl_logo)) {
-      $logo_img = '<img src="images/logos/clear.gif" width="90px" height="50px" />';
-    }
-*/
+  console.log()
   let chlItem = document.createElement('li')
+  chlItem.setAttribute('id', 'chl-'+chlNo)
+  chlItem.setAttribute('class', 'chl cat-'+chlCat+' clearfix')
+  chlItem.setAttribute('data-num', chlNo)
+  chlItem.setAttribute('data-id', chlId)
+  chlItem.setAttribute('data-name', chlName)
+
+	chlItem.innerHTML = '<div class="chl-logo"><div class="chl-no">'+chlNo+'</div>'+logoImg+'</div> \
+		<div class="chl-details clearfix"> \
+		  <div class="chl-details-top"> \
+		    <div class="chl-name stb">'+chlName+'</div> \
+		    <div class="chl-controls"><div class="chl-control-fav"></div></div> \
+		  </div> \
+		  <div class="chl-programs not-loaded">Touch to load programs list</div> \
+		</div>'
+
   listContainer.appendChild(chlItem)
-/*
-    print '<li id="chl-'.htmlspecialchars($chl_no).'" class="chl cat-'.htmlspecialchars($chl_cat_id).' clearfix" data-num="'.htmlspecialchars($chl_no).'" data-id="'.htmlspecialchars($chl_id).'" data-name="'.htmlspecialchars($chl_name).'">
-		<div class="chl-logo"><div class="chl-no">'.htmlspecialchars($chl_no).'</div>'.$logo_img.'</div>
-		<div class="chl-details clearfix">
-		  <div class="chl-details-top">
-		    <div class="chl-name stb">'.htmlspecialchars($chl_name).'</div>
-		    <div class="chl-controls"><div class="chl-control-fav"></div></div>
-		  </div>
-		  <div class="chl-programs not-loaded">Touch to load programs list</div>
-		</div>
-	</li>';
-*/
 })
 </script>
 
