@@ -1,57 +1,3 @@
-<!--
-<?php
-error_reporting(E_ALL);
-ini_set('display_errors',1);
-ini_set('display_startup_errors',1);
-error_reporting(-1);
-
-require_once("bootstrap.php");
-
-if ($db->connect_errno > 0){
-  die('Unable to connect to database [' . $db->connect_error . ']');
-}
-
-
-function print_channels($db) {
-  $statement = $db->prepare("SELECT chl_id,chl_name,chl_no,chl_cat_id,chl_logo FROM remote_channel ORDER BY chl_id");
-  $statement->execute();
-  $statement->bind_result($chl_id, $chl_name, $chl_no, $chl_cat_id, $chl_logo);
-  while($statement->fetch()) {
-  $chl_logo = str_replace(" ", "-", strtolower($chl_name)) . ".gif";
-
-    $logo_img = '<img src="images/logos/'.htmlspecialchars($chl_logo).'" width="90px" />';
-    if (!file_exists('images/logos/'.$chl_logo)) {
-      $logo_img = '<img src="images/logos/clear.gif" width="90px" height="50px" />';
-    }
-    print '<li id="chl-'.htmlspecialchars($chl_no).'" class="chl cat-'.htmlspecialchars($chl_cat_id).' clearfix" data-num="'.htmlspecialchars($chl_no).'" data-id="'.htmlspecialchars($chl_id).'" data-name="'.htmlspecialchars($chl_name).'">
-		<div class="chl-logo"><div class="chl-no">'.htmlspecialchars($chl_no).'</div>'.$logo_img.'</div>
-		<div class="chl-details clearfix">
-		  <div class="chl-details-top">
-		    <div class="chl-name stb">'.htmlspecialchars($chl_name).'</div>
-		    <div class="chl-controls"><div class="chl-control-fav"></div></div>
-		  </div>
-		  <div class="chl-programs not-loaded">Touch to load programs list</div>
-		</div>
-	</li>';
-  }
-}
-
-function print_categories($db) {
-  $statement = $db->prepare("SELECT cat_id,cat_name FROM remote_category");
-  $statement->execute();
-  $statement->bind_result($cat_id, $cat_name);
-  while($statement->fetch()){
-    print '<li class="">
-			<label class="cat" for="cat_'.htmlspecialchars($cat_id).'">
-				<span>'.htmlspecialchars($cat_name).'</span>
-				<input type="checkbox" id="cat_'.htmlspecialchars($cat_id).'" value="'.htmlspecialchars($cat_id).'" class="cat-tick" />
-			</label>
-		</li>';
-  }
-}
-
-
-?>-->
 <!doctype html>
 <html>
 <head>
@@ -72,23 +18,9 @@ function print_categories($db) {
 <!-- <script type="text/javascript" src="js/jquery.mobile-1.4.5.min.js"></script> -->
 <script type="text/javascript" src="js/jquery.js?v=1.2"></script>
 <script type="text/javascript" src="js/jquery.materialripple.js"></script>
-
-
 </head>
+
 <body>
-
-<!--
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-60335508-1', 'auto');
-  ga('send', 'pageview');
-
-</script>
--->
 
 <div id="container">
 <!-- <div id="result"></div> -->
@@ -156,10 +88,7 @@ function print_categories($db) {
 
 
 <div id="panel-filter" class="panel" style="">
-	<ul>
-<?php
-  print_categories($db);
-?>
+	<ul id="category-filter-list">
 	</ul>
 </div>
 
@@ -184,6 +113,35 @@ function print_categories($db) {
 
 
 <script>
+var categories = [
+[3, 'Sports', 0],
+[4, 'News [E]', 0],
+[5, 'News [H]', 0],
+[6, 'Entertainment [E]', 0],
+[7, 'Entertainment [H]', 0],
+[8, 'Movies [E]', 0],
+[9, 'Movies [H]', 0],
+[10, 'Music [E]', 0],
+[11, 'Music [H]', 0],
+[12, 'Cartoons', 0],
+[13, 'Science', 0]
+]
+
+var categoriesContainer = document.getElementById('category-filter-list')
+categories.forEach(function(cat) {
+  let catId = cat[0]
+  let catName = cat[1]
+
+  let catItem = document.createElement('li')
+  catItem.innerHTML = '<li class=""> \
+			<label class="cat" for="cat_'+catId+'"> \
+				<span>'+catName+'</span> \
+				<input type="checkbox" id="cat_'+catId+'" value="'+catId+'" class="cat-tick" /> \
+			</label> \
+		</li>'
+  categoriesContainer.appendChild(catItem)
+})
+
 var channels = [
 [1, 'STAR PLUS', 1, 0, '', 7, null, 'star-plus'],
 [2, 'LIFE OK', 2, 0, '', 7, null, 'life-ok'],
@@ -450,11 +408,11 @@ channels.forEach(function(chl) {
   let chlId = chl[0]
   let chlName = chl[1]
   let chlNo = chl[2]
-  let chlCat = chl[4]
+  let chlCat = chl[5]
+  console.log(chlCat)
   let chlLogo = chlName.toLowerCase().replace(/ /g, '-')+'.gif'
   let logoImg = '<img src="images/logos/'+chlLogo+'" width="90px" />'
 
-  console.log()
   let chlItem = document.createElement('li')
   chlItem.setAttribute('id', 'chl-'+chlNo)
   chlItem.setAttribute('class', 'chl cat-'+chlCat+' clearfix')
@@ -660,7 +618,6 @@ channels.forEach(function(chl) {
 				timeout: 10000
 			});
 		});
-
 
 		/* Setting favorites */
 		$(".chl-control-fav").on("click", function() {
