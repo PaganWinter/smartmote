@@ -409,7 +409,6 @@ channels.forEach(function(chl) {
   let chlName = chl[1]
   let chlNo = chl[2]
   let chlCat = chl[5]
-  console.log(chlCat)
   let chlLogo = chlName.toLowerCase().replace(/ /g, '-')+'.gif'
   let logoImg = '<img src="images/logos/'+chlLogo+'" width="90px" />'
 
@@ -748,7 +747,7 @@ channels.forEach(function(chl) {
 		$( ".btn" ).on( "click", function() {
 			key = $(this).data("key");
 			$result.text(key);
-			$.get("send.php?remote=stb&key="+key);
+			// $.get("send.php?remote=stb&key="+key);
 		});
 
 		$( ".chl-logo" ).on( "click", function() {
