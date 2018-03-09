@@ -1,0 +1,72 @@
+
+.submenu1{
+    background-repeat: no-repeat;
+    border-spacing: 2px;
+    height: 7px;
+}
+.submenu3 {
+    background-repeat: no-repeat;
+    height: 9px;
+}
+
+#field{
+    float : right;
+}
+#submit{
+    float : right;
+    padding-top: 5px;
+    padding-bottom: 10px;
+}
+#myform{
+    border-color: gray;
+    background-color: transparent;
+}
+.but {
+    text-decoration: none;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.submenu2 {
+    float: left;
+    width: 170px;
+    background-color: #012D54;
+    color: white;
+    padding-left: 10px;
+    height: auto;
+}
+
+.white {
+    color: white;
+}
+
+#imgg img{
+    margin-left: -20px;
+    position: absolute;
+}
+
+#brochureMsg{                
+    font-size: 11px; 
+    padding-top: 10px;
+}
+
+#successMsg{
+    font-size: 11px;
+    text-align: right;
+}
+.validClass{
+    margin-left: 35px;
+    font-size: 10px;
+    line-height: 11px;
+}
+#valMsg{
+    font-size: 11px;
+    margin-left: 36px;
+    padding-top: 6px;
+}
+#brochureImg {
+    position: absolute;
+    left: 172px;
+    margin-top: 50px;
+    left:-3px;
+    margin-left: 13px;
+}
